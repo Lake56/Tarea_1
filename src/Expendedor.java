@@ -30,16 +30,16 @@ class Expendedor {
             snicker.add(new Snickers(500+i));
         }
     }
-    public Producto comprarProducto(Moneda m, int producto) {
+    public Producto comprarProducto(Moneda m, int Producto) {
         if (m == null || m.getValor() < precio) {
             if (m != null) vuelto.add(m);
             return null;
         }
-        if (producto !=COCA && producto !=SPRITE && producto !=FANTA && producto !=SNICKER && producto !=SUPER8) {
+        if (Producto !=COCA && Producto !=SPRITE && Producto !=FANTA && Producto !=SNICKER && Producto !=SUPER8) {
             vuelto.add(m);
             return null;
         }
-        if ((producto==COCA && coca.isEmpty()) || (producto==SPRITE && sprite.isEmpty()) || (producto==FANTA && fanta.isEmpty()) || (producto==SNICKER && snicker.isEmpty()) || producto==SUPER8 && super8.isEmpty()) {
+        if ((Producto ==COCA && coca.isEmpty()) || (Producto ==SPRITE && sprite.isEmpty()) || (Producto ==FANTA && fanta.isEmpty()) || (Producto ==SNICKER && snicker.isEmpty()) || Producto ==SUPER8 && super8.isEmpty()) {
             vuelto.add(m);
             return null;
         }
@@ -48,15 +48,15 @@ class Expendedor {
             vuelto.add(new Moneda100());
             cambio -= 100;
         }
-        if (producto == COCA) {
+        if (Producto == COCA) {
             return coca.get();
-        } else if (producto==SPRITE){
+        } else if (Producto ==SPRITE){
             return sprite.get();
         }
-        else if(producto==FANTA){
+        else if(Producto ==FANTA){
             return fanta.get();
         }
-        else if(producto==SNICKER){
+        else if(Producto ==SNICKER){
             return snicker.get();
         }
         else{
