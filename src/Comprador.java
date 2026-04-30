@@ -5,7 +5,7 @@ class Comprador {
     public Comprador(Moneda m, int tipo, Expendedor exp) {
         Producto p = exp.comprarProducto(m, tipo);
         if (p != null) {
-        sabor = p.sabor();
+        sabor = p.Sabor();
         }
         else {
             sabor = null;
