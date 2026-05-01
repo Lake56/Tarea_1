@@ -1,3 +1,6 @@
+/**
+ * comprador que paga por el producto de un expendedor, recibe el vuelto y prueba el sabor
+ */
 class Comprador {
     private String sabor;
     private int vuelto;
@@ -21,14 +24,14 @@ class Comprador {
         }
     }
      /**
-      * Retorna el total del vuelto
+      * retorna el total del vuelto
       * @return vuelto en pesos
       */
     public int cuantoVuelto() {
         return vuelto;
     }
     /**
-     * Retorna el sabor del producto
+     * retorna el sabor del producto
      * @return String con el tipo de producto
      */
     public String queBebiste() {

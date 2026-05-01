@@ -1,3 +1,7 @@
+/**
+ * expendedor de bebidas y dulces
+ * hace el proceso de compra, pago y devolucion de dinero
+ */
 class Expendedor {
     private Deposito<Producto> depositoCoca;
     private Deposito<Producto> depositoSprite;
@@ -5,7 +9,10 @@ class Expendedor {
     private Deposito<Producto> depositoSnickers;
     private Deposito<Producto> depositoSuper8;
     private Deposito<Moneda> depositoVuelto;
-
+    /**
+     * crea los expendedores y llena a todos con la misma cantidad
+     * @param numProductos cantidad de productos para cada tipo
+     */
     public Expendedor(int numProductos) {
         depositoCoca = new Deposito<Producto>();
         depositoSprite = new Deposito<Producto>();
@@ -23,7 +30,12 @@ class Expendedor {
             depositoSuper8.add(new Super8(i));
         }
     }
-    //"tipoProduct" cambiara dependiendo el nombre del enum
+
+    /**
+     * retorna el deposito segun el tipo de producto
+     * @param tipo el tipoProduct solicitado
+     * @return el deposito del producto, o null si no existe
+     */
     private Deposito<Producto> getDeposito(tipoProduct tipo) {
         if (tipo == tipoProduct.COCA) {
             return depositoCoca;
@@ -42,20 +54,27 @@ class Expendedor {
         }
         return null;
     }
+    /**
+     * accion de comprar un producto de el expendedor
+     * @param m  moneda con la que paga
+     * @param cualProducto el identificador del producto
+     * @return producto comprado
+     * @throws PagoIncorrectoException si moneda es null
+     * @throws NoHayProductoException si el deposito esta vacio
+     * @throws PagoInsuficienteException si la moneda es menor al precio del producto
+     */
     public Producto comprarProducto(Moneda m, int cualProducto)
             throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
         if (m == null) {
             throw new PagoIncorrectoException("Sin moneda para comprar.");
         }
 
-        //getProducto ocupa la "id"
         tipoProduct tipo = tipoProduct.getProducto(cualProducto);
         Deposito<Producto> dep = null;
         if (tipo != null) {
             dep = getDeposito(tipo);
         }
-        //excepciones en el expendedor
-        //es el get q se ocupo para pa3p de deposito
+
         Producto p = dep.get();
         if (p == null){
             depositoVuelto.add(m.getSerie());
@@ -69,7 +88,7 @@ class Expendedor {
         }
 
         int diferencia = m.getValor()-tipo.getPrecio();
-        //bucle para agregar las monedas del vuelto
+
         while (diferencia>= 100) {
             depositoVuelto.add(new Moneda100());
             diferencia -=100;
@@ -77,6 +96,10 @@ class Expendedor {
 
         return p;
     }
+    /**
+     * retorna una moneda de vuelto por llamada
+     * @return el vuelto como moneda o null si no hay vuelto
+     */
     public Moneda getVuelto() {
         return depositoVuelto.get();
     }
