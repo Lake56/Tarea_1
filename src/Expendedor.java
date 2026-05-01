@@ -49,40 +49,42 @@ class Expendedor {
         }
         return null;
     }
-    public Producto comprarProducto(Moneda m, int Producto) {
-        if (m == null || m.getValor() < precio) {
-            if (m != null) vuelto.add(m);
-            return null;
+    public Producto comprarProducto(Moneda m, int cualProducto)
+            throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
+        if (m == null) {
+            throw new PagoIncorrectoException("Sin moneda para comprar.");
         }
-        if (Producto !=COCA && Producto !=SPRITE && Producto !=FANTA && Producto !=SNICKER && Producto !=SUPER8) {
-            vuelto.add(m);
-            return null;
+
+        //getProducto ocupa la "id"
+        tipoProduct tipo = tipoProduct.getProducto(cualProducto);
+        Deposito<Producto> dep = null;
+        if (tipo != null) {
+            dep = getDeposito(tipo);
         }
-        if ((Producto ==COCA && coca.isEmpty()) || (Producto ==SPRITE && sprite.isEmpty()) || (Producto ==FANTA && fanta.isEmpty()) || (Producto ==SNICKER && snicker.isEmpty()) || Producto ==SUPER8 && super8.isEmpty()) {
-            vuelto.add(m);
-            return null;
+        //excepciones en el expendedor
+        //es el get q se ocupo para pa3p de deposito
+        Producto p = dep.get();
+        if (p == null){
+            depositoVuelto.add(m.getSerie());
+            throw new NoHayProductoException("No hay producto en el deposito " + cualProducto + ".");
         }
-        int cambio = m.getValor() - precio;
-        while (cambio >= 100) {
-            vuelto.add(new Moneda100());
-            cambio -= 100;
+
+        if (m.getValor() < tipo.getPrecio()) {
+            depositoVuelto.add(m.getSerie());
+            dep.add(p);
+            throw new PagoInsuficienteException("Pago insuficiente");
         }
-        if (Producto == COCA) {
-            return coca.get();
-        } else if (Producto ==SPRITE){
-            return sprite.get();
+
+        int diferencia = m.getValor()-tipo.getPrecio();
+        //bucle para agregar las monedas del vuelto
+        while (diferencia>= 100) {
+            depositoVuelto.add(new Moneda100());
+            diferencia -=100;
         }
-        else if(Producto ==FANTA){
-            return fanta.get();
-        }
-        else if(Producto ==SNICKER){
-            return snicker.get();
-        }
-        else{
-            return super8.get();
-        }
+
+        return p;
     }
     public Moneda getVuelto() {
-        return vuelto.get();
+        return depositoVuelto.get();
     }
 }
