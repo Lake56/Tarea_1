@@ -3,17 +3,15 @@ class Comprador {
     private int vuelto;
 
     public Comprador(Moneda m, int tipo, Expendedor exp) {
-        Producto p = exp.comprarProducto(m, tipo);
-        if (p != null) {
-        sabor = p.Sabor();
-        }
-        else {
+         throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
+            vuelto = 0;
             sabor = null;
-        }
-        vuelto = 0;
-        Moneda mon;
-        while ((mon = exp.getVuelto()) != null) {
-        vuelto += mon.getValor();
+
+            Producto p = exp.comprarProducto(m, tipo);
+            sabor = p.Sabor();
+        Moneda moneda;
+        while ((moneda = exp.getVuelto()) != null) {
+            vuelto += moneda.getValor();
         }
     }
     public int cuantoVuelto() {
