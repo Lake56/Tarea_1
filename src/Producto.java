@@ -1,12 +1,12 @@
 /**
  * se define la clase abstracta Producto
- * que servira como base de varibales y metodos para las demas sub clases de esta
+ * que servira como base de variables y metodos para las demas sub clases de esta
  */
 abstract class Producto {
     private int serie;
     /**
      * Se crea un producto su numero de serie
-     * @param serie dek producto
+     * @param serie del producto
      */
     public Producto(int serie) {
         this.serie = serie;
