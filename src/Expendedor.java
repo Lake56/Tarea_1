@@ -6,13 +6,6 @@ class Expendedor {
     private Deposito<Producto> depositoSuper8;
     private Deposito<Moneda> depositoVuelto;
 
-    public static final int COCA = 1;
-    public static final int SPRITE = 2;
-    public static final int FANTA = 3;
-    public static final int SNICKER = 4;
-    public static final int SUPER8 = 5;
-    private int precio;
-
     public Expendedor(int numProductos) {
         depositoCoca = new Deposito<Producto>();
         depositoSprite = new Deposito<Producto>();
