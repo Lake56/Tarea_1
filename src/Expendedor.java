@@ -1,10 +1,10 @@
 class Expendedor {
-    private Deposito<Producto> coca;
-    private Deposito<Producto> sprite;
-    private Deposito<Producto> fanta;
-    private Deposito<Producto> snicker;
-    private Deposito<Producto> super8;
-    private Deposito<Moneda> vuelto;
+    private Deposito<Producto> depositoCoca;
+    private Deposito<Producto> depositoSprite;
+    private Deposito<Producto> depositoFanta;
+    private Deposito<Producto> depositoSnickers;
+    private Deposito<Producto> depositoSuper8;
+    private Deposito<Moneda> depositoVuelto;
 
     public static final int COCA = 1;
     public static final int SPRITE = 2;
@@ -13,22 +13,41 @@ class Expendedor {
     public static final int SUPER8 = 5;
     private int precio;
 
-    public Expendedor(int numProductos, int precio) {
-        this.precio = precio;
-        coca = new Deposito<Producto>();
-        sprite = new Deposito<Producto>();
-        fanta= new Deposito<Producto>();
-        snicker=new Deposito<Producto>();
-        super8=new Deposito<Producto>();
-        vuelto = new Deposito<Moneda>();
+    public Expendedor(int numProductos) {
+        depositoCoca = new Deposito<Producto>();
+        depositoSprite = new Deposito<Producto>();
+        depositoFanta = new Deposito<Producto>();
+        depositoSnickers = new Deposito<Producto>();
+        depositoSuper8 = new Deposito<Producto>();
+        depositoVuelto = new Deposito<Moneda>();
 
+        //se llenan todos magicamente x igual
         for (int i = 0; i < numProductos; i++) {
-            coca.add(new CocaCola(100 + i));
-            sprite.add(new Sprite(200 + i));
-            fanta.add(new Fanta(300+i));
-            super8.add(new Super8(400+i));
-            snicker.add(new Snickers(500+i));
+            depositoCoca.add(new CocaCola(i));
+            depositoSprite.add(new Sprite(i));
+            depositoFanta.add(new Fanta(i));
+            depositoSnickers.add(new Snickers(i));
+            depositoSuper8.add(new Super8(i));
         }
+    }
+    //"tipoProduct" cambiara dependiendo el nombre del enum
+    private Deposito<Producto> getDeposito(tipoProduct tipo) {
+        if (tipo == tipoProduct.COCA) {
+            return depositoCoca;
+        }
+        if (tipo == tipoProduct.SPRITE) {
+            return depositoSprite;
+        }
+        if (tipo == tipoProduct.FANTA) {
+            return depositoFanta;
+        }
+        if (tipo == tipoProduct.SNICKERS) {
+            return depositoSnickers;
+        }
+        if (tipo == tipoProduct.SUPER8) {
+            return depositoSuper8;
+        }
+        return null;
     }
     public Producto comprarProducto(Moneda m, int Producto) {
         if (m == null || m.getValor() < precio) {
