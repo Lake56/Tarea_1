@@ -1,7 +1,13 @@
 class Comprador {
     private String sabor;
     private int vuelto;
-
+    /**
+     * Crea un comprador que intenta comprar un producto en el expendedor.
+     * Consume el producto si lo obtiene y acumula el vuelto moneda por moneda.
+     * @param m moneda con la que se paga
+     * @param tipo el iddentificador del producto que se busca comprar
+     * @param exp expendedor del cual se compra
+     */
     public Comprador(Moneda m, int tipo, Expendedor exp) {
          throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
             vuelto = 0;
@@ -14,9 +20,17 @@ class Comprador {
             vuelto += moneda.getValor();
         }
     }
+     /**
+      * Retorna el total del vuelto
+      * @return vuelto en pesos
+      */
     public int cuantoVuelto() {
         return vuelto;
     }
+    /**
+     * Retorna el sabor del producto
+     * @return String con el tipo de producto
+     */
     public String queBebiste() {
         return sabor;
     }
