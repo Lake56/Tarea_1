@@ -11,7 +11,7 @@ class Comprador {
      * @param tipo el iddentificador del producto que se busca comprar
      * @param exp expendedor del cual se compra
      */
-    public Comprador(Moneda m, int tipo, Expendedor exp) {
+    public Comprador(Moneda m, tipoProduct tipo, Expendedor exp)
          throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
             vuelto = 0;
             sabor = null;
