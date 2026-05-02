@@ -3,11 +3,11 @@
  * Ademas retornar uno de estos parametros para su uso en el codigo
  */
 public enum tipoProduct  {
-    COCA(1, "CocaCola", 500),
-    SPRITE(2, "Sprite", 500),
-    FANTA(3, "Fanta", 500),
-    SNICKERS(4, "Snickers", 400),
-    SUPER8(5, "Super8", 300);
+    COCA(500, "CocaCola", 1),
+    SPRITE(500, "Sprite", 2),
+    FANTA(500, "Fanta", 3),
+    SNICKERS(400, "Snickers", 4),
+    SUPER8(300, "Super8", 5);
     private int precio;
     private String nombre;
     private int identificador;
