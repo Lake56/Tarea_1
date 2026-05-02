@@ -63,35 +63,41 @@ class Expendedor {
      * @throws NoHayProductoException si el deposito esta vacio
      * @throws PagoInsuficienteException si la moneda es menor al precio del producto
      */
-    public Producto comprarProducto(Moneda m, int cualProducto)
+    public Producto comprarProducto(Moneda m, tipoProduct cualProducto)
             throws PagoIncorrectoException, NoHayProductoException, PagoInsuficienteException {
+
+        // Verificar en caso que la moneda sea nula
         if (m == null) {
             throw new PagoIncorrectoException("Sin moneda para comprar.");
         }
 
-        tipoProduct tipo = tipoProduct.getProducto(cualProducto);
-        Deposito<Producto> dep = null;
-        if (tipo != null) {
-            dep = getDeposito(tipo);
+        // Seleccionar el deposito correcto
+        Deposito<Producto> dep = getDeposito(cualProducto);
+
+        // Verificar que el deposito exista
+        if (dep == null) {
+            depositoVuelto.add(m); // En caso que no existe se devuelve la moenda
+            throw new NoHayProductoException("El producto solicitado no existe.");
         }
 
+        // Verificar que el monto de dinero sea suficiente
+        if (m.getValor() < cualProducto.getPrecio()) {
+            depositoVuelto.add(m); // Devolvemos la moneda en caso que no sea suficiente el monto
+            throw new PagoInsuficienteException("Pago insuficiente.");
+        }
+
+        // Sacar el producto del deposito
         Producto p = dep.get();
         if (p == null){
-            depositoVuelto.add(m.getSerie());
-            throw new NoHayProductoException("No hay producto en el deposito " + cualProducto + ".");
+            depositoVuelto.add(m); // Devolvemos la moneda en caso que no haya stock
+            throw new NoHayProductoException("No hay producto en el deposito.");
         }
 
-        if (m.getValor() < tipo.getPrecio()) {
-            depositoVuelto.add(m.getSerie());
-            dep.add(p);
-            throw new PagoInsuficienteException("Pago insuficiente");
-        }
-
-        int diferencia = m.getValor()-tipo.getPrecio();
-
-        while (diferencia>= 100) {
+        // Calcular el vuelto con monedas de a 100
+        int diferencia = m.getValor() - cualProducto.getPrecio();
+        while (diferencia >= 100) {
             depositoVuelto.add(new Moneda100());
-            diferencia -=100;
+            diferencia -= 100;
         }
 
         return p;
