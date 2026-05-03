@@ -1,5 +1,5 @@
 Una simulación de una máquina expendedora de bebidas y dulces. 
-En este proyecto se intenta poner en practica las principales caracteristias de el Desarrollo Orientado a Objetos.
+En este proyecto se intenta poner en practica las principales caracteristicas de el Desarrollo Orientado a Objetos.
 
 ## Main
 
